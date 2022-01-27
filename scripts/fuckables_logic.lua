@@ -30,27 +30,49 @@ function DEGENMOD:ToggleInputFX(isenabled)
 	end
 end
 
---this makes me miserable but is required to generate the lewd characters
-function DEGENMOD:initFloor()
+function DEGENMOD:resetVariables()
 	fb = nil
-	cachedfbType_Brothel = math.random(0,2)
+	cachedfbType_Brothel = math.random(0,6)
 	paidCharacter = false
 	cachedfbType_Head_Brothel = nil
 	cachedfbType_Body_Brothel = nil
-	sexbarUI:SetFrame("Pre", 0) --todo : remove pre and put in idle frame 0 like everything else, im too lazy to do it rn lol
+	cachedfbType_Cosmetic_Brothel = nil
+	sexbarUI:SetFrame("Pre", 0) --todo : remove pre and put in idle frame 0 like everything else, doesnt impact anything rn until i start working on the UI more and H-Scene finish bullshit
 	numberUI:SetFrame("Idle", 0)
 	hotkeyUI:SetFrame("Idle", 0)
 	pointsuntilfinish = 0
+end
+
+--this is going to make me miserable but is required to generate the lewd characters
+function DEGENMOD:initFloor()
+	cachedfbType_Brothel = math.random(0,6)
+	cachedfbType_Shop = math.random(0,6)
 	
+	--todo : brainstorm ideas for female counterparts that differentiate from regular male characters
 	if cachedfbType_Brothel == 0 then
 		cachedfbType_Head_Brothel = GameState["IsaacHead"]
 		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
 	elseif cachedfbType_Brothel == 1 then
-		cachedfbType_Head_Brothel = GameState["EveHead"]
+		cachedfbType_Head_Brothel = GameState["CainHead"]
 		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
 	elseif cachedfbType_Brothel == 2 then
+		cachedfbType_Head_Brothel = GameState["EveHead"]
+		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+	elseif cachedfbType_Brothel == 3 then
+		cachedfbType_Head_Brothel = GameState["BethanyHead"]
+		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Cosmetic_Brothel = GameState["BethanyCosmetic"]
+	elseif cachedfbType_Brothel == 4 then
 		cachedfbType_Head_Brothel = GameState["FemLazHead"]
 		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Cosmetic_Brothel = GameState["FemLazCosmetic"]
+	--Special Characters
+	elseif cachedfbType_Brothel == 5 then
+		cachedfbType_Head_Brothel = GameState["ShygalHead"]
+		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+	elseif cachedfbType_Brothel == 6 then
+		cachedfbType_Head_Brothel = GameState["FriskHead"]
+		cachedfbType_Body_Brothel = GameState["FriskTorso"]
 	end
 end
 
@@ -59,8 +81,19 @@ function DEGENMOD:checkforCharactersInRoom()
 		if fuckableCharacter.Type == 979 then
 			fb = fuckableCharacter
 			fbSprite = fb:GetSprite()
+			--what a misleading name... "replacespritesheet"... turns out that it actually doesn't replace spritesheets in anim files and instead makes a new one which it replaces and attaches to a layer ID inside the anm2.
+			--a reason as to why i have to call Body type twice. how i'd kill to have it seperated to ReplaceSpritesheet & ReplaceLayer or some bs
 			fbSprite:ReplaceSpritesheet(1, cachedfbType_Head_Brothel)
+			fbSprite:ReplaceSpritesheet(3, cachedfbType_Body_Brothel)
 			fbSprite:ReplaceSpritesheet(0, cachedfbType_Body_Brothel)
+			if cachedfbType_Cosmetic_Brothel ~= nil then
+				fbSprite:ReplaceSpritesheet(2, cachedfbType_Cosmetic_Brothel)
+				fbSprite:ReplaceSpritesheet(11, cachedfbType_Cosmetic_Brothel)
+			else
+				--fun fact : setting a path to a nonexistent file causes the layer to be transparent
+				fbSprite:ReplaceSpritesheet(2, "generic empty string")
+				fbSprite:ReplaceSpritesheet(11, "generic empty string")
+			end
 			fbSprite:LoadGraphics()
 			fbSprite:Play("idle", true)
 		end
@@ -168,6 +201,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 	end
 end
 
-DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, DEGENMOD.initFloor)
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DEGENMOD.checkforCharactersInRoom)
+DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, DEGENMOD.resetVariables)
+DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, DEGENMOD.initFloor)
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_RENDER, DEGENMOD.onFuckableCharacter)

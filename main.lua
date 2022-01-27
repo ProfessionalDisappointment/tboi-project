@@ -2,7 +2,6 @@ DEGENMOD = RegisterMod("Degenerate Mod", 1)
 
 local fuckables_logic = require("scripts/fuckables_logic")
 local configfile = require("scripts/dgm_config")
-local character_attributes = require("scripts/dgm_character_attributes")
 local achbook = require("scripts/achievement_book")
 local cosmetics = require("scripts/cosmetics")
 local wardrobe_mod_support = require("scripts/wardrobe_mod_support")
