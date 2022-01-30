@@ -1,0 +1,25 @@
+<sounds root="sounds/">
+    <sound name="SMACK_REGULAR">
+        <sample weight="1" path="Smack/SmackRegular (1).wav"/>
+        <sample weight="1" path="Smack/SmackRegular (2).wav"/>
+        <sample weight="1" path="Smack/SmackRegular (3).wav"/>
+		<sample weight="1" path="Smack/SmackRegular (4).wav"/>
+    </sound>
+	<sound name="SUCK_REGULAR">
+        <sample weight="1" path="Suck/Suck (1).wav"/>
+        <sample weight="1" path="Suck/Suck (2).wav"/>
+        <sample weight="1" path="Suck/Suck (3).wav"/>
+		<sample weight="1" path="Suck/Suck (4).wav"/>
+		<sample weight="1" path="Suck/Suck (5).wav"/>
+		<sample weight="1" path="Suck/Suck (6).wav"/>
+		<sample weight="1" path="Suck/Suck (7).wav"/>
+		<sample weight="1" path="Suck/Suck (8).wav"/>
+    </sound>
+	
+	<sound name="SMACK_SLOPPY">
+        <sample weight="1" path="Smack/SmackSloppy (1).wav"/>
+        <sample weight="1" path="Smack/SmackSloppy (2).wav"/>
+        <sample weight="1" path="Smack/SmackSloppy (3).wav"/>
+		<sample weight="1" path="Smack/SmackSloppy (4).wav"/>
+    </sound>
+</sounds>

@@ -15,7 +15,6 @@ end
 
 local posx, posy = GetScreenSize()
 
---holy shit this makes me want to fucking hang myself
 function DEGENMOD:PageInit(_DEGENMOD)
 	AchievementBook:Play("Idle", true)
 end

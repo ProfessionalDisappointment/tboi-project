@@ -19,57 +19,49 @@ numberUI:Load("gfx/ui/uiHotkeys2.anm2")
 local sexbarUI = Sprite()
 sexbarUI:Load("gfx/ui/uiProgressBar.anm2")
 
-function DEGENMOD:ToggleInputFX(isenabled)
-	local inputdisabled = isenabled
-	if inputdisabled == false then
-		Isaac.GetPlayer().ControlsEnabled = true
-		player.Visible = true
-	elseif inputdisabled == true then
-		Isaac.GetPlayer().ControlsEnabled = false
-		player.Visible = false
-	end
-end
-
 function DEGENMOD:resetVariables()
 	fb = nil
-	cachedfbType_Brothel = math.random(0,6)
 	paidCharacter = false
+	automatic_mode_on = false
+	hscene_finish = false
+	hotkeyUI_ID = 0
+	pointsuntilfinish = 0
+	cachedfbType_Anim = 0
 	cachedfbType_Head_Brothel = nil
 	cachedfbType_Body_Brothel = nil
 	cachedfbType_Cosmetic_Brothel = nil
 	sexbarUI:SetFrame("Pre", 0) --todo : remove pre and put in idle frame 0 like everything else, doesnt impact anything rn until i start working on the UI more and H-Scene finish bullshit
 	numberUI:SetFrame("Idle", 0)
-	hotkeyUI:SetFrame("Idle", 0)
-	pointsuntilfinish = 0
+	hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
 end
 
 --this is going to make me miserable but is required to generate the lewd characters
 function DEGENMOD:initFloor()
-	cachedfbType_Brothel = math.random(0,6)
-	cachedfbType_Shop = math.random(0,6)
+	cachedfbType_Brothel = math.random(0,5)
+	cachedfbType_Shop = math.random(0,5)
 	
-	--todo : brainstorm ideas for female counterparts that differentiate from regular male characters
+	--todo : brainstorm ideas
 	if cachedfbType_Brothel == 0 then
 		cachedfbType_Head_Brothel = GameState["IsaacHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["IsaacTorso"]
 	elseif cachedfbType_Brothel == 1 then
 		cachedfbType_Head_Brothel = GameState["CainHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["CainTorso"]
 	elseif cachedfbType_Brothel == 2 then
 		cachedfbType_Head_Brothel = GameState["EveHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["EveTorso"]
 	elseif cachedfbType_Brothel == 3 then
 		cachedfbType_Head_Brothel = GameState["BethanyHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["BethanyTorso"]
 		cachedfbType_Cosmetic_Brothel = GameState["BethanyCosmetic"]
 	elseif cachedfbType_Brothel == 4 then
 		cachedfbType_Head_Brothel = GameState["FemLazHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["FemLazTorso"]
 		cachedfbType_Cosmetic_Brothel = GameState["FemLazCosmetic"]
 	--Special Characters
 	elseif cachedfbType_Brothel == 5 then
 		cachedfbType_Head_Brothel = GameState["ShygalHead"]
-		cachedfbType_Body_Brothel = GameState["FemaleTorso"]
+		cachedfbType_Body_Brothel = GameState["ShygalTorso"]
 	elseif cachedfbType_Brothel == 6 then
 		cachedfbType_Head_Brothel = GameState["FriskHead"]
 		cachedfbType_Body_Brothel = GameState["FriskTorso"]
@@ -132,45 +124,32 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 		end
 		
 		--qualifies for the big sex after payment n shit
-		--icky yunky if elseif if if if else leseif ififikfsfil fififslf
 		if paidCharacter == true then
-			if Input.IsButtonTriggered(Keyboard.KEY_Y, 0) then
-				fbSprite:Play("idlealt", true)
-				DEGENMOD:ToggleInputFX(false)
-			elseif Input.IsButtonTriggered(Keyboard.KEY_1, 0) then
-				fbSprite:Play("cowgirlanim", true)
-				DEGENMOD:ToggleInputFX(true)
-				if numberUIEnabled == true then
-					numberUI:SetFrame("Idle", 2)
-				end
-			elseif Input.IsButtonTriggered(Keyboard.KEY_2, 0) then
-				fbSprite:Play("frombackanim", true)
-				DEGENMOD:ToggleInputFX(true)
-				if numberUIEnabled == true then
-					numberUI:SetFrame("Idle", 3)
-				end
-			elseif Input.IsButtonTriggered(Keyboard.KEY_3, 0) then
-				fbSprite:Play("blowjobanim", true)
-				DEGENMOD:ToggleInputFX(true)
-				if numberUIEnabled == true then
-					numberUI:SetFrame("Idle", 4)
-				end
-			elseif Input.IsButtonTriggered(Keyboard.KEY_4, 0) then
-				fbSprite:Play("missionaryanim", true)
-				DEGENMOD:ToggleInputFX(true)
-				if numberUIEnabled == true then
-					numberUI:SetFrame("Idle", 5)
-				end
-			end
+			DEGENMOD:switchAnimations(Keyboard.KEY_1, 1, "cowgirlanim", true)
+			DEGENMOD:switchAnimations(Keyboard.KEY_2, 2, "frombackanim", true)
+			DEGENMOD:switchAnimations(Keyboard.KEY_3, 3, "blowjobanim", true)
+			DEGENMOD:switchAnimations(Keyboard.KEY_4, 4, "missionaryanim", true)
+			DEGENMOD:switchAnimations(Keyboard.KEY_Y, 5, "idlealt", false)
+			DEGENMOD:finishAnimations(Keyboard.KEY_I, true)
 			
 			if fbSprite:IsEventTriggered("smackSfx") then
 				pointsuntilfinish = pointsuntilfinish + 1
 				sexbarUI:SetFrame("Idle", pointsuntilfinish)
-				sound:Play(SoundEffect.SOUND_ANIMAL_SQUISH, 1, 0, false, 1)
+				sound:Play(Isaac.GetSoundIdByName("SMACK_REGULAR"), 1, 0, false, 1)
 			end
 			
 			if fbSprite:IsEventTriggered("paySfx") then
 				sound:Play(SoundEffect.SOUND_SCAMPER, 1, 0, false, 1)
+			end
+			
+			if fbSprite:IsEventTriggered("suckSfx") then
+				pointsuntilfinish = pointsuntilfinish + 1
+				sexbarUI:SetFrame("Idle", pointsuntilfinish)
+				sound:Play(Isaac.GetSoundIdByName("SUCK_REGULAR"), 1, 0, false, 1)
+			end
+			
+			if fbSprite:IsEventTriggered("cumSfx") then
+				sound:Play(Isaac.GetSoundIdByName("SMACK_SLOPPY"), 1, 0, false, 1)
 			end
 			
 			if Input.IsButtonTriggered(Keyboard.KEY_T, 0) then
@@ -179,15 +158,31 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 					numberUIEnabled = true
 					hotkeyUI:Play("Appear", true)
 					numberUI:Play("Appear", true)
+					hotkeyUI_ID = 1
 				elseif hotkeyUIEnabled == true then
 					hotkeyUIEnabled = false
 					numberUIEnabled = false
 					hotkeyUI:Play("Disappear", true)
 					numberUI:Play("Disappear", true)
+					hotkeyUI_ID = 0
 				end
 			end
 			
-			--todo : align in a good spot but i'm lazy so im todoing it
+			if pointsuntilfinish >= 81 then
+				pointsuntilfinish = 81
+				if hotkeyUIEnabled == true then
+					if automatic_mode_on == false then
+						hotkeyUI_ID = 4
+					elseif automatic_mode_on == true then
+						hotkeyUI_ID = 5
+					end
+				end
+			end
+			
+			if hotkeyUI:IsFinished("Appear") or hotkeyUI:IsFinished("Disappear") then
+				hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
+			end
+			
 			hotkeyUI:Render(Vector(Isaac.GetScreenWidth() / 2, Isaac.GetScreenHeight() / 1.20), Vector.Zero, Vector.Zero)
 			hotkeyUI:Update()
 			numberUI:Render(Vector(Isaac.GetScreenWidth() / 2.25, Isaac.GetScreenHeight() / 1.10), Vector.Zero, Vector.Zero)
@@ -196,8 +191,50 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			sexbarUI:Update()
 		end
 	end
-	if pointsuntilfinish >= 81 then
-		pointsuntilfinish = 81
+end
+
+function DEGENMOD:switchAnimations(KeyboardHotkey, fbanimID, fbanimSprite, playerToggleInput)
+	if Input.IsButtonTriggered(KeyboardHotkey, 0) then
+		fbSprite:Play(fbanimSprite, true)
+		cachedfbType_Anim = fbanimID
+		DEGENMOD:ToggleInputFX(playerToggleInput)
+		if numberUIEnabled == true then
+			numberUI:SetFrame("Idle", fbanimID)
+		end
+	end
+end
+
+--todo : flesh out so it's not aids
+function DEGENMOD:finishAnimations(KeyboardHotkey, playerToggleInput)
+	if Input.IsButtonTriggered(KeyboardHotkey, 0) then
+		if pointsuntilfinish >= 81 then
+			pointsuntilfinish = 0
+			hscene_finish = true
+			sexbarUI:SetFrame("Idle", pointsuntilfinish)
+			DEGENMOD:ToggleInputFX(playerToggleInput)
+			if cachedfbType_Anim == 0 then
+				--skip
+			elseif cachedfbType_Anim == 1 then
+				fbSprite:Play("cowgirlanimfinish", true)
+			elseif cachedfbType_Anim == 2 then
+				fbSprite:Play("frombackanimfinish", true)
+			elseif cachedfbType_Anim == 3 then
+				fbSprite:Play("blowjobanimfinish", true)
+			elseif cachedfbType_Anim == 4 then
+				fbSprite:Play("missionaryanimfinish", true)
+			end
+		end
+	end
+end
+
+function DEGENMOD:ToggleInputFX(isenabled)
+	local inputdisabled = isenabled
+	if inputdisabled == false then
+		Isaac.GetPlayer().ControlsEnabled = true
+		player.Visible = true
+	elseif inputdisabled == true then
+		Isaac.GetPlayer().ControlsEnabled = false
+		player.Visible = false
 	end
 end
 

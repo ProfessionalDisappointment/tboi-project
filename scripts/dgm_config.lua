@@ -31,18 +31,22 @@ DEGENMOD.ConfigMod = {
 	--note for myself: if this proves to be too tedious or impede probably just try porting the saving & loading to fuckables_logic.lua file as a seperate thing
 	--for some reason tboi wants to be very stinky when it comes to multiple json files... either that or my pisspoor sphagetti bullshit doesn't want to run
 	--Character Torsos
-	["MaleTorso"] = "gfx/screwable/fb_male_torso_sprites.png",
-	["FemaleTorso"] = "gfx/screwable/fb_female_torso_sprites.png",
-	["FriskTorso"] = "gfx/screwable/fb_frisk_torso_sprites.png",
 	
 	--Character Heads
 	["IsaacHead"] = "gfx/screwable/fb_isaac_head_part.png",
+	["IsaacTorso"] = "gfx/screwable/fb_isaac_torso_sprites.png",
 	["CainHead"] = "gfx/screwable/fb_cain_head_part.png",
+	["CainTorso"] = "gfx/screwable/fb_cain_torso_sprites.png",
 	["EveHead"] = "gfx/screwable/fb_eve_head_part.png",
+	["EveTorso"] = "gfx/screwable/fb_eve_torso_sprites.png",
 	["BethanyHead"] = "gfx/screwable/fb_bethany_head_part.png",
+	["BethanyTorso"] = "gfx/screwable/fb_bethany_torso_sprites.png",
 	["FemLazHead"] = "gfx/screwable/fb_femlaz_head_part.png",
+	["FemLazTorso"] = "gfx/screwable/fb_femlaz_torso_sprites.png",
 	["ShygalHead"] = "gfx/screwable/fb_shygal_head_part.png",
+	["ShygalTorso"] = "gfx/screwable/fb_shygal_torso_sprites.png",
 	["FriskHead"] = "gfx/screwable/fb_frisk_head_part.png",
+	["FriskTorso"] = "gfx/screwable/fb_frisk_torso_sprites.png",
 	
 	["BethanyCosmetic"] = "gfx/screwable/fb_bethany_cosmetic_part.png",
 	["FemLazCosmetic"] = "gfx/screwable/fb_femlaz_cosmetic_part.png",

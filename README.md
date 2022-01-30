@@ -1,4 +1,4 @@
-# tboi-project																					 0.1.1 test
+# tboi-project																					 test
 
 NOTE :: REPENTANCE ONLY! OBVIOUS NSFW WARNING!! OBLIGATORY ALL CHARACTERS ARE 18! I've tried to make it so the mod doesn't 
 interfere with anything so pack merges wouldn't have to be necessary. If you do want to merge it though, I've made it decently 
