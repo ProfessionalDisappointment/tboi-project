@@ -15,7 +15,6 @@
 		<sample weight="1" path="Suck/Suck (7).wav"/>
 		<sample weight="1" path="Suck/Suck (8).wav"/>
     </sound>
-	
 	<sound name="SMACK_SLOPPY">
         <sample weight="1" path="Smack/SmackSloppy (1).wav"/>
         <sample weight="1" path="Smack/SmackSloppy (2).wav"/>

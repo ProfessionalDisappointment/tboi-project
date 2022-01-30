@@ -179,7 +179,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 				end
 			end
 			
-			if hotkeyUI:IsFinished("Appear") or hotkeyUI:IsFinished("Disappear") then
+			if hotkeyUI:IsFinished("Appear") or hotkeyUI:IsFinished("Disappear") or pointsuntilfinish >= 81 or pointsuntilfinish == 0 then
 				hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
 			end
 			
@@ -204,7 +204,7 @@ function DEGENMOD:switchAnimations(KeyboardHotkey, fbanimID, fbanimSprite, playe
 	end
 end
 
---todo : flesh out so it's not aids
+--todo : flesh out so it's not aids, find a solution for animtype 0
 function DEGENMOD:finishAnimations(KeyboardHotkey, playerToggleInput)
 	if Input.IsButtonTriggered(KeyboardHotkey, 0) then
 		if pointsuntilfinish >= 81 then
@@ -213,7 +213,7 @@ function DEGENMOD:finishAnimations(KeyboardHotkey, playerToggleInput)
 			sexbarUI:SetFrame("Idle", pointsuntilfinish)
 			DEGENMOD:ToggleInputFX(playerToggleInput)
 			if cachedfbType_Anim == 0 then
-				--skip
+				fbSprite:Play("cowgirlanimfinish", true)
 			elseif cachedfbType_Anim == 1 then
 				fbSprite:Play("cowgirlanimfinish", true)
 			elseif cachedfbType_Anim == 2 then
