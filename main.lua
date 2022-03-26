@@ -1,5 +1,9 @@
 DEGENMOD = RegisterMod("Degenerate Mod", 1)
 
+--BEWARE YE WHO ALL TREK HERE
+--This code is cursed. It works, but it's cursed. Written in spaghetti.
+
+local achievement_display_api = require("scripts/achievement_display_api")
 local fuckables_logic = require("scripts/fuckables_logic")
 local configfile = require("scripts/dgm_config")
 local achbook = require("scripts/achievement_book")
@@ -10,7 +14,6 @@ local json = require("json")
 
 sound = SFXManager()
 GameState = {}
-
 
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 	if GameState["Debug"] then

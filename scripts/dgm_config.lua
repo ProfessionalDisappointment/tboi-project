@@ -1,4 +1,8 @@
 DEGENMOD.ConfigMod = {
+	
+	--QOL features
+	["Enable Hotkey Reminder"] = true,
+	
 	--unlocks part 1
 	["Unlocked Storepack"] = false,
 	["Unlocked Specialpack"] = false,
@@ -15,6 +19,10 @@ DEGENMOD.ConfigMod = {
 	["Unlocked Isaac Collectible"] = false,
 	["Unlocked Eve Collectible"] = false,
 	["Unlocked FemLaz Collectible"] = false,
+	["Unlocked Cain Collectible"] = false,
+	["Unlocked Shygal Collectible"] = false,
+	["Unlocked Frisk Collectible"] = false,
+	["Unlocked Bethany Collectible"] = false,
 	
 	--variables for special unlocks
 	["100 Completion Unlock"] = true,
@@ -23,9 +31,9 @@ DEGENMOD.ConfigMod = {
 	--debug features
 	["Debug"] = true,
 	
-	--compatibility and other (disable these if it's conflicting, or not... i'm not your dad)
-	["Enable Achievement Tracker"] = false, --UNFINISHED UNFINISHED UNFINISHED
-	["Enable Body Costumes"] = true, --does nothing
+	--compatibility (disable these if it's conflicting, or not... i'm not your dad)
+	["Enable Achievement Tracker"] = true, --UNFINISHED UNFINISHED UNFINISHED
+	["Enable Alternate Character Skins"] = true, --does nothing
 	
 	--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DO NOT EDIT ANYTHING BEYOND THIS POINT WITHOUT KNOWING WHAT YOU'RE DOING::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	--note for myself: if this proves to be too tedious or impede probably just try porting the saving & loading to fuckables_logic.lua file as a seperate thing

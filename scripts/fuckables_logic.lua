@@ -14,7 +14,7 @@ local hotkeyUI = Sprite()
 hotkeyUI:Load("gfx/ui/uiHotkeys.anm2")
 
 local numberUI = Sprite()
-numberUI:Load("gfx/ui/uiHotkeys2.anm2")
+numberUI:Load("gfx/ui/uiHotkeys_numbers.anm2")
 
 local sexbarUI = Sprite()
 sexbarUI:Load("gfx/ui/uiProgressBar.anm2")
@@ -30,9 +30,18 @@ function DEGENMOD:resetVariables()
 	cachedfbType_Head_Brothel = nil
 	cachedfbType_Body_Brothel = nil
 	cachedfbType_Cosmetic_Brothel = nil
-	sexbarUI:SetFrame("Pre", 0) --todo : remove pre and put in idle frame 0 like everything else, doesnt impact anything rn until i start working on the UI more and H-Scene finish bullshit
+	sexbarUI:SetFrame("idle", 0)
 	numberUI:SetFrame("Idle", 0)
 	hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
+	AchievementBook = Sprite()
+	AchievementBookHotkey = Sprite()
+	AchievementBookOpen = false
+	AchievementBook:Load("gfx/ui/achievement_book.anm2")
+	AchievementBookHotkey:Load("gfx/ui/uiBookIndicator.anm2")
+
+	AchievementBookPage = 1
+	guiopen = false
+	achievementBookHotkeyTimer = 0
 end
 
 --this is going to make me miserable but is required to generate the lewd characters
@@ -79,6 +88,7 @@ function DEGENMOD:checkforCharactersInRoom()
 			fbSprite:ReplaceSpritesheet(3, cachedfbType_Body_Brothel)
 			fbSprite:ReplaceSpritesheet(0, cachedfbType_Body_Brothel)
 			if cachedfbType_Cosmetic_Brothel ~= nil then
+				--back and front cosmetics if needed
 				fbSprite:ReplaceSpritesheet(2, cachedfbType_Cosmetic_Brothel)
 				fbSprite:ReplaceSpritesheet(11, cachedfbType_Cosmetic_Brothel)
 			else
@@ -125,6 +135,9 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 		
 		--qualifies for the big sex after payment n shit
 		if paidCharacter == true then
+			--call new collectible register flag n shit
+			DEGENMOD:RegisterNewCollectible(cachedfbType_Brothel)
+
 			DEGENMOD:switchAnimations(Keyboard.KEY_1, 1, "cowgirlanim", true)
 			DEGENMOD:switchAnimations(Keyboard.KEY_2, 2, "frombackanim", true)
 			DEGENMOD:switchAnimations(Keyboard.KEY_3, 3, "blowjobanim", true)
@@ -134,7 +147,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			
 			if fbSprite:IsEventTriggered("smackSfx") then
 				pointsuntilfinish = pointsuntilfinish + 1
-				sexbarUI:SetFrame("Idle", pointsuntilfinish)
+				sexbarUI:SetFrame("idle", pointsuntilfinish)
 				sound:Play(Isaac.GetSoundIdByName("SMACK_REGULAR"), 1, 0, false, 1)
 			end
 			
@@ -144,8 +157,9 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			
 			if fbSprite:IsEventTriggered("suckSfx") then
 				pointsuntilfinish = pointsuntilfinish + 1
-				sexbarUI:SetFrame("Idle", pointsuntilfinish)
-				sound:Play(Isaac.GetSoundIdByName("SUCK_REGULAR"), 1, 0, false, 1)
+				sexbarUI:SetFrame("idle", pointsuntilfinish)
+				sound:Play(Isaac.GetSoundIdByName("SMACK_REGULAR"), 1, 0, false, 1)
+				--todo : find good sound that does not sound like S H I T
 			end
 			
 			if fbSprite:IsEventTriggered("cumSfx") then
@@ -168,8 +182,8 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 				end
 			end
 			
-			if pointsuntilfinish >= 81 then
-				pointsuntilfinish = 81
+			if pointsuntilfinish >= 101 then
+				pointsuntilfinish = 101
 				if hotkeyUIEnabled == true then
 					if automatic_mode_on == false then
 						hotkeyUI_ID = 4
@@ -179,7 +193,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 				end
 			end
 			
-			if hotkeyUI:IsFinished("Appear") or hotkeyUI:IsFinished("Disappear") or pointsuntilfinish >= 81 or pointsuntilfinish == 0 then
+			if hotkeyUI:IsFinished("Appear") or hotkeyUI:IsFinished("Disappear") or pointsuntilfinish >= 101 or pointsuntilfinish == 0 then
 				hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
 			end
 			
@@ -187,7 +201,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			hotkeyUI:Update()
 			numberUI:Render(Vector(Isaac.GetScreenWidth() / 2.25, Isaac.GetScreenHeight() / 1.10), Vector.Zero, Vector.Zero)
 			numberUI:Update()
-			sexbarUI:Render(Vector(Isaac.GetScreenWidth() / 3.35, Isaac.GetScreenHeight() / 1.10), Vector.Zero, Vector.Zero)
+			sexbarUI:Render(Vector(Isaac.GetScreenWidth() / 2, Isaac.GetScreenHeight() / 1.30), Vector.Zero, Vector.Zero)
 			sexbarUI:Update()
 		end
 	end
@@ -206,23 +220,21 @@ end
 
 --todo : flesh out so it's not aids, find a solution for animtype 0
 function DEGENMOD:finishAnimations(KeyboardHotkey, playerToggleInput)
-	if Input.IsButtonTriggered(KeyboardHotkey, 0) then
-		if pointsuntilfinish >= 81 then
-			pointsuntilfinish = 0
-			hscene_finish = true
-			sexbarUI:SetFrame("Idle", pointsuntilfinish)
-			DEGENMOD:ToggleInputFX(playerToggleInput)
-			if cachedfbType_Anim == 0 then
-				fbSprite:Play("cowgirlanimfinish", true)
-			elseif cachedfbType_Anim == 1 then
-				fbSprite:Play("cowgirlanimfinish", true)
-			elseif cachedfbType_Anim == 2 then
-				fbSprite:Play("frombackanimfinish", true)
-			elseif cachedfbType_Anim == 3 then
-				fbSprite:Play("blowjobanimfinish", true)
-			elseif cachedfbType_Anim == 4 then
-				fbSprite:Play("missionaryanimfinish", true)
-			end
+	if Input.IsButtonTriggered(KeyboardHotkey, 0) and pointsuntilfinish >= 81 then
+		pointsuntilfinish = 0
+		hscene_finish = true
+		sexbarUI:SetFrame("idle", pointsuntilfinish)
+		DEGENMOD:ToggleInputFX(playerToggleInput)
+		if cachedfbType_Anim == 0 then
+			fbSprite:Play("cowgirlanimfinish", true)
+		elseif cachedfbType_Anim == 1 then
+			fbSprite:Play("cowgirlanimfinish", true)
+		elseif cachedfbType_Anim == 2 then
+			fbSprite:Play("frombackanimfinish", true)
+		elseif cachedfbType_Anim == 3 then
+			fbSprite:Play("blowjobanimfinish", true)
+		elseif cachedfbType_Anim == 4 then
+			fbSprite:Play("missionaryanimfinish", true)
 		end
 	end
 end
