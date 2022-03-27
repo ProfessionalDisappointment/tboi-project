@@ -38,9 +38,8 @@ DEGENMOD.ConfigMod = {
 	--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DO NOT EDIT ANYTHING BEYOND THIS POINT WITHOUT KNOWING WHAT YOU'RE DOING::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	--note for myself: if this proves to be too tedious or impede probably just try porting the saving & loading to fuckables_logic.lua file as a seperate thing
 	--for some reason tboi wants to be very stinky when it comes to multiple json files... either that or my pisspoor sphagetti bullshit doesn't want to run
-	--Character Torsos
 	
-	--Character Heads
+	--Character Heads and Character Torsos
 	["IsaacHead"] = "gfx/screwable/fb_isaac_head_part.png",
 	["IsaacTorso"] = "gfx/screwable/fb_isaac_torso_sprites.png",
 	["CainHead"] = "gfx/screwable/fb_cain_head_part.png",
@@ -56,11 +55,7 @@ DEGENMOD.ConfigMod = {
 	["FriskHead"] = "gfx/screwable/fb_frisk_head_part.png",
 	["FriskTorso"] = "gfx/screwable/fb_frisk_torso_sprites.png",
 	
+	--Seperate hair layers
 	["BethanyCosmetic"] = "gfx/screwable/fb_bethany_cosmetic_part.png",
-	["FemLazCosmetic"] = "gfx/screwable/fb_femlaz_cosmetic_part.png",
-	
-	--Price Attributes
-	["Price"] = 5,
-	["NewTag"] = false,
-	["SaleTag"] = false
+	["FemLazCosmetic"] = "gfx/screwable/fb_femlaz_cosmetic_part.png"
 }

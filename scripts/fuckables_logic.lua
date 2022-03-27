@@ -1,6 +1,3 @@
-
---TODO : reset stats that you'd otherwise gain thru fuckable character
-
 local hotkeyUIEnabled = false
 local numberUIEnabled = false
 
@@ -19,29 +16,50 @@ numberUI:Load("gfx/ui/uiHotkeys_numbers.anm2")
 local sexbarUI = Sprite()
 sexbarUI:Load("gfx/ui/uiProgressBar.anm2")
 
-function DEGENMOD:resetVariables()
-	fb = nil
-	paidCharacter = false
-	automatic_mode_on = false
-	hscene_finish = false
-	hotkeyUI_ID = 0
-	pointsuntilfinish = 0
-	cachedfbType_Anim = 0
-	cachedfbType_Head_Brothel = nil
-	cachedfbType_Body_Brothel = nil
-	cachedfbType_Cosmetic_Brothel = nil
-	sexbarUI:SetFrame("idle", 0)
-	numberUI:SetFrame("Idle", 0)
-	hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
-	AchievementBook = Sprite()
-	AchievementBookHotkey = Sprite()
-	AchievementBookOpen = false
-	AchievementBook:Load("gfx/ui/achievement_book.anm2")
-	AchievementBookHotkey:Load("gfx/ui/uiBookIndicator.anm2")
 
-	AchievementBookPage = 1
-	guiopen = false
-	achievementBookHotkeyTimer = 0
+function DEGENMOD:resetVariables(softResetFlag)
+	if softResetFlag then
+		paidcharacter = false
+		automatic_mode_on = false
+		hscene_finish = false
+		hotkeyUI_ID = 0
+		hotkeyUIEnabled = false
+		numberUIEnabled = false
+		pointsuntilfinish = 0
+		sexbarUI:SetFrame("Idle", 0)
+		numberUI:SetFrame("Idle", 0)
+		hotkeyUI:SetFrame("Idle", 0)
+		
+		AchievementBookOpen = false
+		AchievementBookPage = 0
+		guiopen = false
+		if AchievementBook then
+			AchievementBook:SetFrame("Close", 40)
+		end
+	else
+		fb = nil
+		paidCharacter = false
+		automatic_mode_on = false
+		hscene_finish = false
+		hotkeyUI_ID = 0
+		hotkeyUIEnabled = false
+		numberUIEnabled = false
+		pointsuntilfinish = 0
+		cachedfbType_Anim = 0
+		cachedfbType_Head_Brothel = nil
+		cachedfbType_Body_Brothel = nil
+		cachedfbType_Cosmetic_Brothel = nil
+		sexbarUI:SetFrame("Idle", 0)
+		numberUI:SetFrame("Idle", 0)
+		hotkeyUI:SetFrame("Idle", 0)
+
+		AchievementBookPage = 0
+		guiopen = false
+		achievementBookHotkeyTimer = 0
+		if AchievementBook then
+			AchievementBook:SetFrame("Close", 40)
+		end
+	end
 end
 
 --this is going to make me miserable but is required to generate the lewd characters
@@ -98,6 +116,8 @@ function DEGENMOD:checkforCharactersInRoom()
 			end
 			fbSprite:LoadGraphics()
 			fbSprite:Play("idle", true)
+		else
+			DEGENMOD:resetVariables(true)
 		end
 	end
 	
@@ -147,7 +167,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			
 			if fbSprite:IsEventTriggered("smackSfx") then
 				pointsuntilfinish = pointsuntilfinish + 1
-				sexbarUI:SetFrame("idle", pointsuntilfinish)
+				sexbarUI:SetFrame("Idle", pointsuntilfinish)
 				sound:Play(Isaac.GetSoundIdByName("SMACK_REGULAR"), 1, 0, false, 1)
 			end
 			
@@ -250,7 +270,7 @@ function DEGENMOD:ToggleInputFX(isenabled)
 	end
 end
 
-DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DEGENMOD.checkforCharactersInRoom)
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, DEGENMOD.resetVariables)
+DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DEGENMOD.checkforCharactersInRoom)
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, DEGENMOD.initFloor)
 DEGENMOD:AddCallback(ModCallbacks.MC_POST_RENDER, DEGENMOD.onFuckableCharacter)

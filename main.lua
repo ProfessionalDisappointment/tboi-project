@@ -24,6 +24,7 @@ DEGENMOD:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 			Isaac.RenderText("Brothel Head Graphics: ".. cachedfbType_Head_Brothel, Isaac.GetScreenWidth() / 3, Isaac.GetScreenHeight() / 2 + 35, 255, 255, 255, 255)
 			Isaac.RenderText("Brothel Body Graphics: ".. cachedfbType_Body_Brothel, Isaac.GetScreenWidth() / 3, Isaac.GetScreenHeight() / 2 + 15, 255, 255, 255, 255)
 			Isaac.RenderText("Hotkey UI ID: ".. hotkeyUI_ID, Isaac.GetScreenWidth() / 3, Isaac.GetScreenHeight() / 2 + 5, 255, 255, 255, 255)
+			Isaac.RenderText("Book Page ID: ".. AchievementBookPage, Isaac.GetScreenWidth() / 3, Isaac.GetScreenHeight() / 2 - 10, 255, 255, 255, 255)
 		elseif Input.IsButtonPressed(Keyboard.KEY_O, 0) and DebugMenu == true then
 			DebugMenu = false
 		end

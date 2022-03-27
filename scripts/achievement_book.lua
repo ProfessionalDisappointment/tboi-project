@@ -1,33 +1,40 @@
+AchievementBook = Sprite()
+AchievementBookHotkey = Sprite()
+AchievementBookOpen = false
+AchievementBookPage = 0
+AchievementBookHotkeyTimer = 0
+guiopen = false
+AchievementBook:Load("gfx/ui/achievement_book.anm2")
+AchievementBookHotkey:Load("gfx/ui/uiBookIndicator.anm2")
+
 function DEGENMOD:PageInit(_DEGENMOD)
-	AchievementBook:Play("Idle", true)
-	
-	if AchievementBookPage == 1 then
+	if AchievementBookPage == 0 then
 		AchievementBook:SetFrame("Pages", 0)
-	elseif AchievementBookPage == 2 and GameState["Unlocked Eve Collectible"] == true and GameState["Unlocked Bethany Collectible"] == true then
+	elseif AchievementBookPage == 1 and GameState["Unlocked Eve Collectible"] == true and GameState["Unlocked Bethany Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 1)
-	elseif AchievementBookPage == 2 and GameState["Unlocked Eve Collectible"] == false and GameState["Unlocked Bethany Collectible"] == true then
+	elseif AchievementBookPage == 1 and GameState["Unlocked Eve Collectible"] == false and GameState["Unlocked Bethany Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 2)
-	elseif AchievementBookPage == 2 and GameState["Unlocked Eve Collectible"] == true and GameState["Unlocked Bethany Collectible"] == false then
+	elseif AchievementBookPage == 1 and GameState["Unlocked Eve Collectible"] == true and GameState["Unlocked Bethany Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 3)
-	elseif AchievementBookPage == 2 and GameState["Unlocked Eve Collectible"] == false and GameState["Unlocked Bethany Collectible"] == false then
+	elseif AchievementBookPage == 1 and GameState["Unlocked Eve Collectible"] == false and GameState["Unlocked Bethany Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 4)
 		
-	elseif AchievementBookPage == 3 and GameState["Unlocked Isaac Collectible"] == true and GameState["Unlocked Frisk Collectible"] == true then
+	elseif AchievementBookPage == 2 and GameState["Unlocked Isaac Collectible"] == true and GameState["Unlocked Frisk Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 5)
-	elseif AchievementBookPage == 3 and GameState["Unlocked Isaac Collectible"] == false and GameState["Unlocked Frisk Collectible"] == true then
+	elseif AchievementBookPage == 2 and GameState["Unlocked Isaac Collectible"] == false and GameState["Unlocked Frisk Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 6)
-	elseif AchievementBookPage == 3 and GameState["Unlocked Isaac Collectible"] == true and GameState["Unlocked Frisk Collectible"] == false then
+	elseif AchievementBookPage == 2 and GameState["Unlocked Isaac Collectible"] == true and GameState["Unlocked Frisk Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 7)
-	elseif AchievementBookPage == 3 and GameState["Unlocked Isaac Collectible"] == false and GameState["Unlocked Frisk Collectible"] == false then
+	elseif AchievementBookPage == 2 and GameState["Unlocked Isaac Collectible"] == false and GameState["Unlocked Frisk Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 8)
 		
-	elseif AchievementBookPage == 4 and GameState["Unlocked Femlaz Collectible"] == true and GameState["Unlocked Cain Collectible"] == true then
+	elseif AchievementBookPage == 3 and GameState["Unlocked FemLaz Collectible"] == true and GameState["Unlocked Cain Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 9)
-	elseif AchievementBookPage == 4 and GameState["Unlocked Femlaz Collectible"] == true and GameState["Unlocked Cain Collectible"] == false then
+	elseif AchievementBookPage == 3 and GameState["Unlocked FemLaz Collectible"] == true and GameState["Unlocked Cain Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 10)
-	elseif AchievementBookPage == 4 and GameState["Unlocked Femlaz Collectible"] == false and GameState["Unlocked Cain Collectible"] == true then
+	elseif AchievementBookPage == 3 and GameState["Unlocked FemLaz Collectible"] == false and GameState["Unlocked Cain Collectible"] == true then
 		AchievementBook:SetFrame("Pages", 11)
-	elseif AchievementBookPage == 4 and GameState["Unlocked Femlaz Collectible"] == false and GameState["Unlocked Cain Collectible"] == false then
+	elseif AchievementBookPage == 3 and GameState["Unlocked FemLaz Collectible"] == false and GameState["Unlocked Cain Collectible"] == false then
 		AchievementBook:SetFrame("Pages", 12)
 	end
 end
@@ -54,7 +61,7 @@ function DEGENMOD:onUpdateAchievementBook(_DEGENMOD)
 			if Input.IsButtonTriggered(Keyboard.KEY_U, 0) and AchievementBookPage ~= 3 then --max pages
 				AchievementBookPage = AchievementBookPage + 1
 				AchievementBook:Play("TurnPageRight", false)
-			elseif Input.IsButtonTriggered(Keyboard.KEY_Y, 0) and AchievementBookPage ~= 1 then
+			elseif Input.IsButtonTriggered(Keyboard.KEY_Y, 0) and AchievementBookPage ~= 0 then
 				AchievementBookPage = AchievementBookPage - 1
 				AchievementBook:Play("TurnPageLeft", false)
 			end
