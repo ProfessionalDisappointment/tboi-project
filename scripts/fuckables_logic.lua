@@ -1,22 +1,3 @@
-local hotkeyUIEnabled = false
-local numberUIEnabled = false
-
-local fb = nil
-local p = false --i hate this i need this for the position check but i hate this i hate this
-local paidCharacter = false
-local pointsuntilfinish = 0
-local inputdisabled = false
-
---preload UIs and stuff meant specifically for the fuckening
-local hotkeyUI = Sprite()
-hotkeyUI:Load("gfx/ui/uiHotkeys.anm2")
-
-local numberUI = Sprite()
-numberUI:Load("gfx/ui/uiHotkeys_numbers.anm2")
-
-local sexbarUI = Sprite()
-sexbarUI:Load("gfx/ui/uiProgressBar.anm2")
-
 characterdirectory = {
 	--NOTES = 
 	--* Invalid textures for Head & Body come up as transparent/invisible in the game
@@ -86,6 +67,26 @@ for i in pairs(characterdirectory) do
 	vi = vi + 1
 	characterdirectory[vi] = i
 end
+
+
+local hotkeyUIEnabled = false
+local numberUIEnabled = false
+
+local fb = nil
+local p = false --i hate this i need this for the position check but i hate this i hate this
+local paidCharacter = false
+local pointsuntilfinish = 0
+local inputdisabled = false
+
+--preload UIs and stuff meant specifically for the fuckening
+local hotkeyUI = Sprite()
+hotkeyUI:Load("gfx/ui/uiHotkeys.anm2")
+
+local numberUI = Sprite()
+numberUI:Load("gfx/ui/uiHotkeys_numbers.anm2")
+
+local sexbarUI = Sprite()
+sexbarUI:Load("gfx/ui/uiProgressBar.anm2")
 
 function DEGENMOD:resetVariables(softResetFlag)
 	if softResetFlag then
@@ -264,7 +265,7 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			if fbSprite:IsFinished("pay") and p == false then
 				p = true
 				fb.Position = Vector(fb.Position.X, fb.Position.Y - 115)
-				fbCurrPos = Vector(fb.Position.X + 20, fb.Position.Y - 115)
+				fbCurrPos = Vector(fb.Position.X - 40, fb.Position.Y - 115)
 				fbSprite:Play("idlealt", true)
 				brothelBedSprite:SetFrame(1)
 			end
