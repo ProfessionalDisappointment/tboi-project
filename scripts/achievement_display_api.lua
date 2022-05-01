@@ -43,26 +43,6 @@ local function OverridePause(_, player, hook, action)
 	end
 end
 
-local function FreezeGame(unfreeze)
-	if unfreeze then
-		OldTimer = nil
-		if not AddedPauseCallback then
-			AddedPauseCallback = true
-			CCO.AchievementDisplayAPI:AddCallback(ModCallbacks.MC_INPUT_ACTION, OverridePause, InputHook.IS_ACTION_PRESSED)
-		end
-	else
-		if not OldTimer then
-			OldTimer = game.TimeCounter
-		end
-		if REPENTANCE then
-			Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM)
-		else
-			Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, false, false, true, false, 0)
-		end
-		game.TimeCounter = OldTimer
-	end
-end
-
 local CallbackAdded = false
 function CCO.AchievementDisplayAPI:OverrideControls(player, hook, action)
 	if action >= ButtonAction.ACTION_BOMB
@@ -84,8 +64,7 @@ CCO.AchievementDisplayAPI:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 			if (DeadSeaScrollsMenu and DeadSeaScrollsMenu.OpenedMenu) then
 				DeadSeaScrollsMenu:CloseMenu(true, true)
 			end
-		
-			FreezeGame()
+			
 			if not CallbackAdded then
 				CallbackAdded = true
 				CCO.AchievementDisplayAPI:AddCallback(ModCallbacks.MC_INPUT_ACTION, CCO.AchievementDisplayAPI.OverrideControls, InputHook.IS_ACTION_TRIGGERED)
@@ -143,8 +122,6 @@ CCO.AchievementDisplayAPI:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 							data.AchievementDisplayAPIControls = nil
 						end
 					end
-					
-					FreezeGame(true)
 				end
 				
 				return

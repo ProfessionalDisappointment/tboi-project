@@ -7,6 +7,7 @@ guiopen = false
 AchievementBook:Load("gfx/ui/achievement_book.anm2")
 AchievementBookHotkey:Load("gfx/ui/uiBookIndicator.anm2")
 
+--todo : condense
 function DEGENMOD:PageInit(_DEGENMOD)
 	if AchievementBookPage == 0 then
 		AchievementBook:SetFrame("Pages", 0)
@@ -40,7 +41,7 @@ function DEGENMOD:PageInit(_DEGENMOD)
 end
 
 function DEGENMOD:onUpdateAchievementBook(_DEGENMOD)
-	if GameState["Enable Achievement Tracker"] then
+	if GameState["Enable Achievement Tracker"] and globalAchievementBookLock ~= true then
 		if Input.IsButtonTriggered(Keyboard.KEY_C, 0) then
 			if guiopen == false then
 				sound:Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12, 1, 0, false, 1)
@@ -86,23 +87,10 @@ function DEGENMOD:onUpdateAchievementBook(_DEGENMOD)
 	end
 end
 
-function DEGENMOD:RegisterNewCollectible(currentChar)
-	-- I am going to kill myself
-	if currentChar == 0 and GameState["Unlocked Isaac Collectible"] == false then
+function DEGENMOD:RegisterNewCollectible(currentCachedChar)
+	-- I am going to kill myself (currentChar = cachedFbType_Brothel that's initialized)
+	if currentCachedChar == 0 and GameState["Unlocked Isaac Collectible"] == false then
 		GameState["Unlocked Isaac Collectible"] = true
-	elseif currentChar == 1 and GameState["Unlocked Cain Collectible"] == false then
-		GameState["Unlocked Cain Collectible"] = true
-	elseif currentChar == 2 and GameState["Unlocked Eve Collectible"] == false then
-		GameState["Unlocked Eve Collectible"] = true
-	elseif currentChar == 3 and GameState["Unlocked Bethany Collectible"] == false then
-		GameState["Unlocked Bethany Collectible"] = true
-	elseif currentChar == 4 and GameState["Unlocked FemLaz Collectible"] == false then
-		GameState["Unlocked FemLaz Collectible"] = true
-	elseif currentChar == 5 and GameState["Unlocked Frisk Collectible"] == false then
-		GameState["Unlocked Frisk Collectible"] = true
-	elseif currentChar == 6 and GameState["Unlocked Shygal Collectible"] == false then
-		-- DOES NOT WORK, MAKES NPCS FREEZE, FIX L8R :: CCO.AchievementDisplayAPI.PlayAchievement("gfx/ui/achievements/achievement_image_unlock.png")
-		GameState["Unlocked Shygal Collectible"] = true
 	end
 end
 
@@ -113,7 +101,7 @@ function DEGENMOD:StartBookHotkeyTimer(_DEGENMOD)
 end
 
 function DEGENMOD:ShowBookHotkey(_DEGENMOD)
-	if achievementBookHotkeyTimer > 0 then
+	if achievementBookHotkeyTimer >= 0 then
 		achievementBookHotkeyTimer = achievementBookHotkeyTimer - 1
 	end
 end

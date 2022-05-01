@@ -1,11 +1,11 @@
 # Degenerate Mod
 
-NOTE :: REPENTANCE ONLY! OBVIOUS NSFW WARNING!! OBLIGATORY ALL CHARACTERS ARE 18! 
+NOTE :: REPENTANCE ONLY! OBVIOUS NSFW WARNING!
+
+Please check out the GITHUB wiki I've provided and follow the twitter (@ProfDisappoint) for occasional updates
 
 I've tried to make it so the mod doesn't interfere with anything so pack merges wouldn't have to be necessary. If you do want to merge it though, I've made it decently 
 easy to do so with most of the things in their own seperate files instead of a giant main.lua clump. Even then, good luck reading my damn code.
-
-Currently updates that change the config files might might not clash properly as I update things so go to "The Binding of Isaac Rebirth\data\" and delete any mention of the mod
 
 Download Guide :
 1) Top Right Code button > Download ZIP

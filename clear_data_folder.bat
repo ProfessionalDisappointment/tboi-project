@@ -1,0 +1,1 @@
+del "..\..\data\degenerate mod\" /s /f /q

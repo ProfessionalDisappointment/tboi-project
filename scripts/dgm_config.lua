@@ -1,21 +1,30 @@
 DEGENMOD.ConfigMod = {
 	
 	--QOL features
-	["Enable Hotkey Reminder"] = true,
-	
+	["Enable Hotkey Reminder"] = false,
+
+	["Shader Zooming"] = true,
+
+	-- 0 : NONE
+	-- 1 : MALE
+	-- 2 : FEMALE
+	["Isaac Skin Type"] = 2,
+	["Magdalene Skin Type"] = 2,
+	["Cain Skin Type"] = 2,
+	["Judas Skin Type"] = 2,
+	["Eve Skin Type"] = 2,
+ 	
+	--EXPERIMENTAL OR UNFINISHED FEATURES. These are not guaranteed to work or are iffy to deal with.
+	["Enable Achievement Tracker"] = false,
+	["Character Replace during Scene"] = false, --Has not been finished, only supports Isaac / Maggie / Cain for now (too lazy for sprites lol). playing any other character will cause issues
+
+	--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DO NOT EDIT ANYTHING BEYOND THIS POINT WITHOUT KNOWING WHAT YOU'RE DOING::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	--unlocks part 1
-	["Unlocked Storepack"] = false,
-	["Unlocked Specialpack"] = false,
-	["Unlocked Sinspack"] = false,
-	["Unlocked Mainpack"] = false,
-	["Unlocked Genderbendpack"] = false,
-	["Unlocked Taintedpack"] = false,
-	
-	["Unlocked Brothels"] = false,
-	["Unlocked Shop"] = false,
-	
+	["Unlocked Main Pack"] = true,
+	["Unlocked R63 Pack"] = true,
+		
 	--unlocks part 2 electric boogaloo
-	--TODO : think up collectibles for all the characters n toss em here
 	["Unlocked Isaac Collectible"] = false,
 	["Unlocked Eve Collectible"] = false,
 	["Unlocked FemLaz Collectible"] = false,
@@ -28,34 +37,12 @@ DEGENMOD.ConfigMod = {
 	["100 Completion Unlock"] = true,
 	["Joke Unlock"] = true,
 	
-	--debug features
-	["Debug"] = true,
-	
-	--compatibility (disable these if it's conflicting, or not... i'm not your dad)
-	["Enable Achievement Tracker"] = true, --UNFINISHED UNFINISHED UNFINISHED
-	["Enable Alternate Character Skins"] = true, --does nothing
-	
-	--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DO NOT EDIT ANYTHING BEYOND THIS POINT WITHOUT KNOWING WHAT YOU'RE DOING::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	--note for myself: if this proves to be too tedious or impede probably just try porting the saving & loading to fuckables_logic.lua file as a seperate thing
-	--for some reason tboi wants to be very stinky when it comes to multiple json files... either that or my pisspoor sphagetti bullshit doesn't want to run
-	
+	--code specific variables
+	["autoTimerMaxRate"] = 20,
+	["autoTimerFallMultiplier"] = 1,
+	["shaderZoomInMultiplier"] = 0.6,
+
 	--Character Heads and Character Torsos
-	["IsaacHead"] = "gfx/screwable/fb_isaac_head_part.png",
-	["IsaacTorso"] = "gfx/screwable/fb_isaac_torso_sprites.png",
-	["CainHead"] = "gfx/screwable/fb_cain_head_part.png",
-	["CainTorso"] = "gfx/screwable/fb_cain_torso_sprites.png",
-	["EveHead"] = "gfx/screwable/fb_eve_head_part.png",
-	["EveTorso"] = "gfx/screwable/fb_eve_torso_sprites.png",
-	["BethanyHead"] = "gfx/screwable/fb_bethany_head_part.png",
-	["BethanyTorso"] = "gfx/screwable/fb_bethany_torso_sprites.png",
-	["FemLazHead"] = "gfx/screwable/fb_femlaz_head_part.png",
-	["FemLazTorso"] = "gfx/screwable/fb_femlaz_torso_sprites.png",
-	["ShygalHead"] = "gfx/screwable/fb_shygal_head_part.png",
-	["ShygalTorso"] = "gfx/screwable/fb_shygal_torso_sprites.png",
-	["FriskHead"] = "gfx/screwable/fb_frisk_head_part.png",
-	["FriskTorso"] = "gfx/screwable/fb_frisk_torso_sprites.png",
-	
-	--Seperate hair layers
-	["BethanyCosmetic"] = "gfx/screwable/fb_bethany_cosmetic_part.png",
-	["FemLazCosmetic"] = "gfx/screwable/fb_femlaz_cosmetic_part.png"
+	["MaleTorso"] = "gfx/screwable/fb_torso_male.png",
+	["FemaleTorso"] = "gfx/screwable/fb_torso_female.png"
 }
