@@ -265,7 +265,6 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 			if fbSprite:IsFinished("pay") and p == false then
 				p = true
 				fb.Position = Vector(fb.Position.X, fb.Position.Y - 115)
-				fbCurrPos = Vector(fb.Position.X - 40, fb.Position.Y - 115)
 				fbSprite:Play("idlealt", true)
 				brothelBedSprite:SetFrame(1)
 			end
@@ -316,11 +315,11 @@ function DEGENMOD:onFuckableCharacter(_DEGENMOD)
 					hotkeyUI:SetFrame("Idle", hotkeyUI_ID)
 				end
 				
-				hotkeyUI:Render(Vector(fbCurrPos.X, fbCurrPos.Y), Vector.Zero, Vector.Zero)
+				hotkeyUI:Render(Vector(Isaac.GetScreenWidth() / 2 + 30, Isaac.GetScreenWidth() / 2 - 255), Vector.Zero, Vector.Zero)
 				hotkeyUI:Update()
-				numberUI:Render(Vector(fbCurrPos.X, fbCurrPos.Y), Vector.Zero, Vector.Zero)
+				numberUI:Render(Vector(Isaac.GetScreenWidth() / 2 + 30, Isaac.GetScreenWidth() / 2 - 255), Vector.Zero, Vector.Zero)
 				numberUI:Update()
-				sexbarUI:Render(Vector(fbCurrPos.X, fbCurrPos.Y), Vector.Zero, Vector.Zero)
+				sexbarUI:Render(Vector(Isaac.GetScreenWidth() / 2 + 30, Isaac.GetScreenWidth() / 2 - 255), Vector.Zero, Vector.Zero)
 				sexbarUI:Update()
 			end
 		end
@@ -457,7 +456,6 @@ end
 function DEGENMOD:GetShaderParams(shaderName)
     if shaderName == 'ZoomInShader' then
 		local params = {
-			ZoomPos = 0.25,
 			ZoomLevel = zoomLevelFloat
 		}
         return params;
